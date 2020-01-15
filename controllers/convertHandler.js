@@ -9,33 +9,40 @@
 function ConvertHandler() {
   const splitReg = /[\d./]+|[a-zA-Z]+/;
   const units = ['gal', 'L', 'lbs', 'kg', 'mi', 'km']
+  
   this.getNum = function(input) {
-    
-    if(!input) {
-      return 'invalid number and unit'
-    } else if(units.includes(input)) {
+    const splitedInput = input.match(splitReg);
+    if(units.includes(input)) {
       return 1
     } else{
-      const number = input.match(splitReg)[0];
-      const isValidNumberReg = /^\d*\.?\d*\/?\d*\.?\d*$/
-      console.log(number);
-      if(!isValidNumberReg.test(number)) {
-        return 'invalid number'
-      } else {
-        return eval(number)
+      
+      if(splitedInput.length === 2) {
+        const number = splitedInput[0]
+        const isValidNumberReg = /^\d*\.?\d*\/?\d*\.?\d*$/
+        console.log(number);
+        if(!isValidNumberReg.test(number)) {
+          return 'invalid number'
+        } else {
+          //console.log(eval(number).toFixed(5))
+          return eval(number).toFixed(5)
+        }
       }
+      
       
     }
     
   };
 
   this.getUnit = function(input) {
-    var result;
-    if(!input) {
-      return 'invalid number and'
+
+    if(units.includes(input)) {
+      //console.log(input)
+      return input
+    } else{
+      
     }
   
-    return result;
+
   };
 
   this.getReturnUnit = function(initUnit) {
