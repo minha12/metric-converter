@@ -54,15 +54,29 @@ function ConvertHandler() {
   };
 
   this.getReturnUnit = function(initUnit) {
-    var result;
+    
+    const mapUnits = {
+      gal: 'l',
+      l: 'gal',
+      lbs: 'kg',
+      kg: 'lbs',
+      mi: 'km',
+      km: 'mi'
+    }
 
-    return result;
+    return mapUnits[initUnit];
   };
 
   this.spellOutUnit = function(unit) {
-    var result;
-
-    return result;
+    const spellMappings={
+      'gal':'gallons',
+      'l':'liters',
+      'lbs':'pounds',
+      'kg':'kilograms',
+      'mi':'miles',
+      'km':'kilometers'
+    }
+    return spellMappings[unit];
   };
 
   this.convert = function(initNum, initUnit) {
@@ -87,17 +101,17 @@ function ConvertHandler() {
         result = initNum * miToKm
         break
       case 'km':
-        resutl = initNum / miToKm
+        result = initNum / miToKm
         break
     }
 
-    return result;
+    return result.toFixed(5);
   };
 
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
-    var result;
+    
 
-    return result;
+    return `${initNum} ${this.spellOutUnit(initUnit)} converts to ${returnNum} ${this.spellOutUnit(returnUnit)}`;
   };
 }
 
