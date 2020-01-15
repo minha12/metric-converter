@@ -8,10 +8,13 @@
 
 function ConvertHandler() {
   const splitReg = /[\d./]+|[a-zA-Z]+/;
+  const units = ['gal', 'L', 'lbs', 'kg', 'mi', 'km']
   this.getNum = function(input) {
     
     if(!input) {
       return 'invalid number and unit'
+    } else if(units.includes(input)) {
+      return 1
     } else{
       const number = input.match(splitReg)[0];
       const isValidNumberReg = /^\d*\.?\d*\/?\d*\.?\d*$/
@@ -28,7 +31,10 @@ function ConvertHandler() {
 
   this.getUnit = function(input) {
     var result;
-
+    if(!input) {
+      return 'invalid number and'
+    }
+  
     return result;
   };
 
