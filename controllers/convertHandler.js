@@ -7,13 +7,23 @@
  */
 
 function ConvertHandler() {
-  const splitReg = /[\d\.]+|[a-zA-Z]+/;
+  const splitReg = /[\d./]+|[a-zA-Z]+/;
   this.getNum = function(input) {
-    var result;
-    const number = input.match(splitReg)[0];
-    const isValidNumberReg = /^\d*\.\d*$/
-    console.log(number);
-    return result;
+    
+    if(!input) {
+      return 'invalid number and unit'
+    } else{
+      const number = input.match(splitReg)[0];
+      const isValidNumberReg = /^\d*\.\d*$/
+      console.log(number);
+      if(!isValidNumberReg.test(number)) {
+        return 'invalid number'
+      } else {
+        return number
+      }
+      
+    }
+    
   };
 
   this.getUnit = function(input) {
