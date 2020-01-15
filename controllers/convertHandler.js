@@ -14,12 +14,12 @@ function ConvertHandler() {
       return 'invalid number and unit'
     } else{
       const number = input.match(splitReg)[0];
-      const isValidNumberReg = /^\d*\.\d*$/
+      const isValidNumberReg = /^\d*\.?\d*\/?\d*\.?\d*$/
       console.log(number);
       if(!isValidNumberReg.test(number)) {
         return 'invalid number'
       } else {
-        return number
+        return eval(number)
       }
       
     }
