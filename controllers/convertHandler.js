@@ -7,7 +7,7 @@
  */
 
 function ConvertHandler() {
-  const splitReg = /[\d\.\/]+|[a-zA-Z]+/;
+  const splitReg = /[\d\.\/]+|[a-zA-Z]+/g;
   const units = ["gal", "L", "lbs", "kg", "mi", "km"];
 
   this.getNum = function(input) {
@@ -17,8 +17,9 @@ function ConvertHandler() {
     } else {
       if (splitedInput.length === 2) {
         const number = splitedInput[0];
-        const isValidNumberReg = /^\d*\.?\d*\/?\d*\.?\d*$/;
+        const isValidNumberReg = /^\d*\.?\d*\/?\d*$/;
         console.log(number);
+        console.log(!isValidNumberReg.test(number));
         if (!isValidNumberReg.test(number)) {
           return "invalid number";
         } else {
@@ -31,7 +32,7 @@ function ConvertHandler() {
 
   this.getUnit = function(input) {
     const splitedInput = input.match(splitReg);
-    console.log(splitedInput)
+    console.log(splitedInput);
     if (splitedInput.length === 1) {
       if (units.includes(input)) {
         //console.log(input)
@@ -69,6 +70,26 @@ function ConvertHandler() {
     const lbsToKg = 0.453592;
     const miToKm = 1.60934;
     var result;
+    switch(initUnit) {
+      case 'gal':
+        result = initNum * galToL
+        break
+      case 'l':
+        result = initNum / galToL
+        break
+      case 'lbs':
+        result = initNum * lbsToKg
+        break
+      case 'kg':
+        result = initNum / lbsToKg
+        break
+      case 'mi':
+        result = initNum * miToKm
+        break
+      case 'km':
+        resutl = initNum / miToKm
+        break
+    }
 
     return result;
   };
