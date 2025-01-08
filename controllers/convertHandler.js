@@ -77,13 +77,14 @@ function ConvertHandler() {
   };
 
   this.spellOutUnit = function(unit) {
-    const spellMappings={
-      'gal':'gallons',
-      'l':'liters',
-      'lbs':'pounds',
-      'kg':'kilograms',
-      'mi':'miles',
-      'km':'kilometers'
+    const spellMappings = {
+      'gal': 'gallons',
+      'l': 'liters',
+      'L': 'liters',  // Add explicit mapping for uppercase 'L'
+      'lbs': 'pounds',
+      'kg': 'kilograms',
+      'mi': 'miles',
+      'km': 'kilometers'
     }
     return spellMappings[unit];
   };
