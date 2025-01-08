@@ -12,22 +12,36 @@ function ConvertHandler() {
 
   this.getNum = function(input) {
     const splitedInput = input.match(splitReg);
+    
+    // Return 1 if only unit is provided
     if (units.includes(input)) {
       return 1;
-    } else {
-      if (splitedInput.length === 2) {
-        const number = splitedInput[0];
-        const isValidNumberReg = /^\d*\.?\d*\/?\d*$/;
-        console.log(number);
-        console.log(!isValidNumberReg.test(number));
-        if (!isValidNumberReg.test(number)) {
-          return "invalid number";
-        } else {
-          //console.log(eval(number).toFixed(5))
-          return eval(number).toFixed(5);
-        }
-      }
     }
+
+    if (splitedInput && splitedInput.length > 0) {
+      const number = splitedInput[0];
+      
+      // Handle fractions
+      if(number.includes('/')) {
+        const parts = number.split('/');
+        if(parts.length > 2) return null; // Invalid double fraction
+        
+        const numerator = parseFloat(parts[0]);
+        const denominator = parseFloat(parts[1]);
+        
+        if(isNaN(numerator) || isNaN(denominator) || denominator === 0) {
+          return null;
+        }
+        
+        return Number((numerator / denominator).toFixed(5));
+      }
+      
+      // Handle regular numbers
+      const validNumber = parseFloat(number);
+      return isNaN(validNumber) ? null : validNumber;
+    }
+    
+    return null;
   };
 
   this.getUnit = function(input) {
@@ -50,6 +64,9 @@ function ConvertHandler() {
         console.log("invaid unit");
         return "invalid unit";
       }
+    }
+    if(!units.includes(unit.toLowerCase())) {
+      return null; // Return null for invalid units instead of 'invalid unit'
     }
   };
 
@@ -105,7 +122,7 @@ function ConvertHandler() {
         break
     }
 
-    return result.toFixed(5);
+    return Number(result.toFixed(5)); // Return as number, not string
   };
 
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
