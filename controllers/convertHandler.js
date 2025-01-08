@@ -46,28 +46,20 @@ function ConvertHandler() {
 
   this.getUnit = function(input) {
     const splitedInput = input.match(splitReg);
-    console.log(splitedInput);
+    
+    if (!splitedInput) return null;
+    
+    let unit;
     if (splitedInput.length === 1) {
-      if (units.includes(input)) {
-        //console.log(input)
-        return input;
-      } else {
-        console.log("invalid unit");
-        return "invalid unit";
-      }
+      unit = input;
     } else {
-      const unit = splitedInput[1];
-      if (units.includes(unit)) {
-        console.log(unit);
-        return unit;
-      } else {
-        console.log("invaid unit");
-        return "invalid unit";
-      }
+      unit = splitedInput[1];
     }
-    if(!units.includes(unit.toLowerCase())) {
-      return null; // Return null for invalid units instead of 'invalid unit'
-    }
+    
+    // Normalize unit case (special handling for 'L')
+    unit = unit === 'L' ? 'L' : unit.toLowerCase();
+    
+    return units.includes(unit) ? unit : null;
   };
 
   this.getReturnUnit = function(initUnit) {
@@ -100,29 +92,35 @@ function ConvertHandler() {
     const galToL = 3.78541;
     const lbsToKg = 0.453592;
     const miToKm = 1.60934;
-    var result;
-    switch(initUnit) {
+    let result;
+    
+    // Normalize unit case for comparison
+    const unit = initUnit === 'L' ? 'l' : initUnit.toLowerCase();
+    
+    switch(unit) {
       case 'gal':
-        result = initNum * galToL
-        break
+        result = initNum * galToL;
+        break;
       case 'l':
-        result = initNum / galToL
-        break
+        result = initNum / galToL;
+        break;
       case 'lbs':
-        result = initNum * lbsToKg
-        break
+        result = initNum * lbsToKg;
+        break;
       case 'kg':
-        result = initNum / lbsToKg
-        break
+        result = initNum / lbsToKg;
+        break;
       case 'mi':
-        result = initNum * miToKm
-        break
+        result = initNum * miToKm;
+        break;
       case 'km':
-        result = initNum / miToKm
-        break
+        result = initNum / miToKm;
+        break;
+      default:
+        return undefined;
     }
 
-    return Number(result.toFixed(5)); // Return as number, not string
+    return Number(result.toFixed(5));
   };
 
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
