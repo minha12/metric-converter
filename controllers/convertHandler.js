@@ -1,5 +1,3 @@
-
-
 function ConvertHandler() {
   const splitReg = /[\d\.\/]+|[a-zA-Z]+/g;
   const units = ["gal", "l", "lbs", "kg", "mi", "km"]; // only lowercase
@@ -48,10 +46,13 @@ function ConvertHandler() {
       unit = splitedInput[1];
     }
     
-    // Always normalize to lowercase
-    unit = unit.toLowerCase();
+    // Special handling for 'L'/'l'
+    const normalizedUnit = unit.toLowerCase();
+    if (normalizedUnit === 'l') {
+      return 'L'; // Always return uppercase 'L'
+    }
     
-    return units.includes(unit) ? unit : null;
+    return units.includes(normalizedUnit) ? normalizedUnit : null;
   };
 
   this.getReturnUnit = function(initUnit) {
@@ -79,13 +80,17 @@ function ConvertHandler() {
   };
 
   this.convert = function(initNum, initUnit) {
+    if (initNum === null || initUnit === null) {
+      return null; // Handle null inputs
+    }
+
     const galToL = 3.78541;
     const lbsToKg = 0.453592;
     const miToKm = 1.60934;
     let result;
     
-    // Normalize to lowercase for switch statement
-    const unit = initUnit.toLowerCase();
+    // Normalize unit but handle 'L' specially
+    const unit = initUnit === 'L' ? 'l' : initUnit.toLowerCase();
     
     switch(unit) {
       case 'gal':
