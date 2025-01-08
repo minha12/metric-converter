@@ -1,10 +1,4 @@
-/*
- *
- *
- *       Complete the handler logic below
- *
- *
- */
+
 
 function ConvertHandler() {
   const splitReg = /[\d\.\/]+|[a-zA-Z]+/g;

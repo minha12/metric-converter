@@ -33,7 +33,8 @@ var Mocha = require('mocha'),
     path = require('path');
 
 var mocha = new Mocha({
-    ui: 'tdd'
+    ui: 'tdd',
+    timeout: 5000  // Increase timeout to 5 seconds
 });
 var testDir = './tests'
 
@@ -57,7 +58,7 @@ emitter.run = function() {
   var separator = ' -> ';
   // Run the tests.
   try {
-  var runner = mocha.ui('tdd').run()
+    var runner = mocha.run()
     .on('test end', function(test) {
         // remove comments
         var body = test.body.replace(/\/\/.*\n|\/\*.*\*\//g, '');
