@@ -63,17 +63,18 @@ function ConvertHandler() {
   };
 
   this.getReturnUnit = function(initUnit) {
-    
     const mapUnits = {
-      gal: 'l',
-      l: 'gal',
-      lbs: 'kg',
-      kg: 'lbs',
-      mi: 'km',
-      km: 'mi'
+      'gal': 'L',   // Changed to return uppercase 'L'
+      'L': 'gal',   // Added explicit uppercase 'L' case
+      'l': 'gal',   // Keep lowercase case for backward compatibility
+      'lbs': 'kg',
+      'kg': 'lbs',
+      'mi': 'km',
+      'km': 'mi'
     }
-
-    return mapUnits[initUnit];
+    // Normalize the input unit
+    const unit = initUnit === 'L' ? 'L' : initUnit.toLowerCase();
+    return mapUnits[unit];
   };
 
   this.spellOutUnit = function(unit) {
@@ -86,7 +87,9 @@ function ConvertHandler() {
       'mi': 'miles',
       'km': 'kilometers'
     }
-    return spellMappings[unit];
+    // Normalize the input unit
+    const normalizedUnit = unit === 'L' ? 'L' : unit.toLowerCase();
+    return spellMappings[normalizedUnit];
   };
 
   this.convert = function(initNum, initUnit) {
